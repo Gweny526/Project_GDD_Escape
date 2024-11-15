@@ -1973,6 +1973,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2391911636292504152, guid: 0d00d668e796f5d4fa7ca1ce2ee72439, type: 3}
+      propertyPath: chaseSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2391911636292504152, guid: 0d00d668e796f5d4fa7ca1ce2ee72439, type: 3}
       propertyPath: waypointGroup
       value: 
       objectReference: {fileID: 2121487044}

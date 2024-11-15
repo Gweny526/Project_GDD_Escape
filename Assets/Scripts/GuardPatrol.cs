@@ -12,20 +12,21 @@ public enum GuardPatrolState
 }
 public class GuardPatrol : MonoBehaviour
 {
-    [SerializeField] private GuardPatrolState state; 
-    public Transform playerTransform;
+    [SerializeField]private GuardPatrolState state; 
+    [SerializeField]private Transform playerTransform;
     
-    public Transform waypointGroup;
+    [SerializeField]private Transform waypointGroup;
 
     private Transform currentWaypoint;
     private float moveSpeed = 3f; // Vitesse de déplacement du guard
-    private float chaseSpeed = 10f; // Vitesse lorsqu'il poursuit le joueur
+    [SerializeField]private float chaseSpeed = 10f; // Vitesse lorsqu'il poursuit le joueur
 
-    
+    private Vector2 previousPosition;
 
     void Start()
     {
         currentWaypoint = SelectDestination();
+        previousPosition = transform.position;
     }
 
     void Update()
@@ -36,22 +37,26 @@ public class GuardPatrol : MonoBehaviour
                 Patrol();
                 if (CheckPlayerVisibility())
                 {
+                    Debug.Log("Chasing guard: on");
                     state = GuardPatrolState.Chasing;
+                    ChasePlayer();
                 }
                 break;
             case GuardPatrolState.Chasing:
                 ChasePlayer();
                 if (!CheckPlayerVisibility())
                 {
+                    Debug.Log("Player not visible, continuing patrol");
                     state = GuardPatrolState.Patrolling;
                     // L'IA retourne au waypoint
                     currentWaypoint = SelectDestination();
+                    Patrol();
                 }
                 break;
         }
     }
 
-    // Gère le patrouillage de l'IA
+    // Gère le patrouillage du garde
     void Patrol()
     {
         MoveToWaypoint();
@@ -61,9 +66,10 @@ public class GuardPatrol : MonoBehaviour
         }
         float direction = currentWaypoint.position.x - transform.position.x;
         FlipSprite(direction);
+        
     }
 
-    // Déplace l'IA vers le waypoint
+    // Déplace le garde vers le waypoint
     void MoveToWaypoint()
     {
         Vector2 direction = (currentWaypoint.position - transform.position).normalized;
@@ -78,6 +84,8 @@ public class GuardPatrol : MonoBehaviour
 
         float moveDirection = playerTransform.position.x - transform.position.x;
         FlipSprite(moveDirection);
+        
+
     }
 
     // Détection de collision avec un waypoint
@@ -104,31 +112,52 @@ public class GuardPatrol : MonoBehaviour
 
         return newWaypoint;
     }
-    // Cette fonction inverse l'échelle sur l'axe X pour retourner le personnage
-
-
-    // Vérifie si le joueur est visible par l'IA
+    
+    // Vérifie si le joueur est visible par le garde
     bool CheckPlayerVisibility()
     {
-        Vector3 direction = playerTransform.position - transform.position;
-        direction = direction.normalized;
 
-        Vector3 start = transform.position + (direction * 0.8f);
+        // Calcul de la direction dans laquelle le garde regarde
+        Vector3 directionToCompare;
+        if (transform.localScale.x > 0) 
+        {
+            // Garde regarde à droite
+            directionToCompare = transform.right;
+        }
+        else
+        {
+            // Garde regarde à gauche
+            directionToCompare = -transform.right;
+        }
+         // Détermine la direction dans laquelle le raycast va être lancé (le garde regarde dans cette direction)
+        Vector3 raycastDirection = directionToCompare.normalized;
+        
 
-        RaycastHit2D hit = Physics2D.Raycast(start, direction, 10f);
+        Vector3 start = transform.position + (raycastDirection * 0.8f);
+        // Vector3 startRight = transform.position + (direction * -10.8f);
+        
 
-        Debug.DrawRay(start, direction * 10, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(start, raycastDirection, 10f);
+        // RaycastHit2D hitRight = Physics2D.Raycast(startRight, direction, 10f );
+
+        Debug.DrawRay(start, raycastDirection * 10, Color.red);
+        // Debug.DrawRay(startRight, direction * 10, Color.red);
+
+
+
         if(hit.collider != null) Debug.Log($"+++ {hit.collider.name} +++");
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             // Debug.Log($"[GuardPatrolState] Raycast hit: {hit.collider.name}");
             Debug.Log("is it working!!");
-            if (Vector3.Angle(transform.forward, playerTransform.position - transform.position) < 45)
+            if(Vector2.Angle(directionToCompare, raycastDirection) < 45)
             {
+                Debug.Log($"is it true?{hit.collider.name}");
                 return true;
             }
         }
         return false;
+    
     }
     void FlipSprite(float direction)
     {
@@ -137,6 +166,7 @@ public class GuardPatrol : MonoBehaviour
             Vector3 localScale = transform.localScale;
             localScale.x = -localScale.x;  // Inverser l'échelle en X
             transform.localScale = localScale;
+            
         }
     }
 }
