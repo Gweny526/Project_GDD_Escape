@@ -16,12 +16,26 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]private bool rightIsBlocked = false;
     [SerializeField]private bool leftIsBlocked = false;
 
+    //ref au "guard"
+    public GameObject guard;
+
+    //position initiale
+    private Vector2 initialPlayerPosition;
+    private Vector2 initialGuardPosition;
+
 
     void Awake()
     {
         xAxis = actions.FindActionMap("PlayerMove").FindAction("XAxis");
         duck = actions.FindActionMap("PlayerMove").FindAction("Duck");
         rb = GetComponent<Rigidbody2D>();
+
+        //save initial position
+        initialPlayerPosition = transform.position;
+        if(guard != null)
+        {
+            initialGuardPosition = guard.transform.position;
+        }
     }
 
     void OnEnable()
@@ -51,12 +65,20 @@ public class PlayerControl : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision){
-        collision.transform.CompareTag("InvisibleWall");
-        if(collision.transform.position.x < transform.position.x){
-            leftIsBlocked = true;
+        if(collision.transform.CompareTag("InvisibleWall")){
+
+            if(collision.transform.position.x < transform.position.x){
+                leftIsBlocked = true;
+            }
+            else{
+                rightIsBlocked = true;
+            }
         }
-        else{
-            rightIsBlocked = true;
+        if(collision.transform.CompareTag("Guard")){
+            transform.position = initialPlayerPosition;
+            if (guard != null){
+                guard.transform.position = initialGuardPosition;
+            }
         }
     }
 

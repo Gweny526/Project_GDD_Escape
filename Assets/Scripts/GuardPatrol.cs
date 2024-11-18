@@ -109,7 +109,6 @@ public class GuardPatrol : MonoBehaviour
             index = Random.Range(0, waypointGroup.childCount);
             newWaypoint = waypointGroup.GetChild(index);
         }
-
         return newWaypoint;
     }
     
