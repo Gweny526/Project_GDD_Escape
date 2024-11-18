@@ -22,6 +22,9 @@ public class GuardPatrol : MonoBehaviour
     [SerializeField]private float chaseSpeed = 10f; // Vitesse lorsqu'il poursuit le joueur
 
     private Vector2 previousPosition;
+    
+    //variable player visibility
+    private bool playerInvisible = false;
 
     void Start()
     {
@@ -115,7 +118,8 @@ public class GuardPatrol : MonoBehaviour
     // Vérifie si le joueur est visible par le garde
     bool CheckPlayerVisibility()
     {
-
+        //si le player est invisible ne le détecte pas
+        if(playerInvisible)return false;
         // Calcul de la direction dans laquelle le garde regarde
         Vector3 directionToCompare;
         if (transform.localScale.x > 0) 
@@ -157,6 +161,12 @@ public class GuardPatrol : MonoBehaviour
         }
         return false;
     
+    }
+    
+    //permet de définir si le player est invisible ou non 
+    public void SetPlayerInvisible(bool isInvisible)
+    {
+        playerInvisible = isInvisible;
     }
     void FlipSprite(float direction)
     {

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InvisibleWall
   - Guard
+  - HidingSpot
   layers:
   - Default
   - TransparentFX
