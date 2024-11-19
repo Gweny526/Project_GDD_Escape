@@ -25,11 +25,16 @@ public class GuardPatrol : MonoBehaviour
     
     //variable player visibility
     private bool playerInvisible = false;
+    [SerializeField] private GameObject player;
+    private Collider2D playerCollider;
+    
 
     void Start()
     {
         currentWaypoint = SelectDestination();
         previousPosition = transform.position;
+        playerCollider = player.GetComponent<Collider2D>();
+
     }
 
     void Update()
@@ -167,7 +172,17 @@ public class GuardPatrol : MonoBehaviour
     public void SetPlayerInvisible(bool isInvisible)
     {
         playerInvisible = isInvisible;
+        if(isInvisible)
+        {
+            playerCollider.enabled = false;
+        }
+        else
+        {
+            playerCollider.enabled = true;
+        }
+
     }
+    
     void FlipSprite(float direction)
     {
         if ((direction > 0 && transform.localScale.x < 0) || (direction < 0 && transform.localScale.x > 0))
