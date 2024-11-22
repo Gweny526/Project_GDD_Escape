@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using Unity.VisualScripting;
+using UnityEngine.Windows;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
@@ -51,10 +52,12 @@ public class PlayerControl : MonoBehaviour
     void OnEnable()
     {
         actions.FindActionMap("PlayerMove").Enable();
+        useKey.performed += PlayerIsHiding; //lance le listener
     }
     void OnDisable()
     {
         actions.FindActionMap("PlayerMove").Disable();
+        useKey.performed -= PlayerIsHiding; //desactive le listener
         
     }
     
@@ -63,7 +66,10 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         MoveX();
-        PlayerIsHiding();
+        Debug.Log($"gweny : Update: isHiding = {isHiding}, isInHidingSpot = {isInHidingSpot}");
+        // PlayerIsHiding();
+        // Debug.Log($"sam PlayerIsHiding : {isHiding}");
+        Debug.Log($"sam isHiding : {isHiding}");
     }
     void MoveX()
     {
@@ -74,34 +80,62 @@ public class PlayerControl : MonoBehaviour
         transform.position += speed * Time.deltaTime * xMove * transform.right;
         
     }
-
-    void PlayerIsHiding()
+    public bool IsPlayerHiding()
     {
-        //si la touche E est pressée et si le player est caché
-        if(useKey.triggered)Debug.Log("Key E is pressed");
-        if (useKey.triggered && !isInHidingSpot)
+        return isHiding;
+    }
+
+    public void PlayerIsHiding(InputAction.CallbackContext context)
+    {
+        // if (context.performed && isInHidingSpot)
+        // {
+        //     Debug.Log($"gweny : PlayerIsHiding called. isInHidingSpot: {isInHidingSpot}, context.performed: {context.performed}");
+
+        //     isHiding = !isHiding;
+
+        //     if(isHiding)
+        //     {
+        //         Debug.Log("Player is now hiding");
+        //         guard.GetComponent<GuardPatrol>().SetPlayerInvisible(true);
+        //         playerCollider.isTrigger = true;
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("Player is no longer hiding");
+        //         guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
+        //         playerCollider.isTrigger = false;
+        //     }
+        // } 
+        // else if (context.performed && !isInHidingSpot)
+        // {
+        //         Debug.Log("Cannot hide, player is not in a hiding spot!");
+        // }
+        if (context.performed && isInHidingSpot)
         {
-            isHiding = !isHiding; //alterné d'un état a l'autre
-            if(isHiding)
+            Debug.Log($"Toggling hiding state: isHiding = {isHiding}");
+            isHiding = !isHiding;
+
+            if (isHiding)
             {
-                Debug.Log("Key E pressed And Player is now hiding");
-                Debug.Log("Player is now hiding!");
+                Debug.Log("Player is now hiding");
                 guard.GetComponent<GuardPatrol>().SetPlayerInvisible(true);
+                playerCollider.isTrigger = true;
+            }
+            else
+            {
+                Debug.Log("Player is no longer hiding");
+                guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
                 playerCollider.isTrigger = false;
-                // playerCollider.enabled = true;
-            } // Informer le garde
+            }
         }
-        else
+        else if (context.performed && !isInHidingSpot)
         {
-            Debug.Log("Player is no longer hiding!");
-            guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false); // Informer le garde
-            playerCollider.isTrigger = true;
-                 
-                         
-        }
+            Debug.Log("Cannot hide, player is not in a hiding spot!");
+        }    
     }
 
     void OnCollisionEnter2D(Collision2D collision){
+        Debug.Log($"gweny : Collision Entered with: {collision.transform.name}, Tag: {collision.transform.tag}");
 
         if(collision.transform.CompareTag("InvisibleWall")){
         
@@ -118,13 +152,15 @@ public class PlayerControl : MonoBehaviour
                 guard.transform.position = initialGuardPosition;
             }
         }
-        if(collision.transform.CompareTag("HidingSpot"))
+    }
+    void OnTriggerEnter2D(Collider2D other){
+        if(other.CompareTag("HidingSpot"))
         {
-            Debug.Log("player is in hiding spot");
             isInHidingSpot = true;
-            
+            Debug.Log($"gweny : Triggered player is now in hiding spot {other.name}");
 
         }
+
     }
 
     
@@ -138,9 +174,28 @@ public class PlayerControl : MonoBehaviour
         }
         if(collision.transform.CompareTag("HidingSpot"))
         {
+            if (isHiding)
+            {
+                Debug.Log("Player is still hiding, ignoring exit trigger");
+                return; // Ne pas forcer l'état si le joueur est encore caché
+            }
+
+            Debug.Log("Player has exited the hiding spot");
             isInHidingSpot = false;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other){
+        if(other.CompareTag("HidingSpot"))
+        {
+            isInHidingSpot = false;
+            isHiding = false;
+            guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
+            playerCollider.isTrigger = false;
+            Debug.Log($"gweny : Triggered player as now exited the hiding spot {other.name}");
 
         }
+
     }
     
 }

@@ -25,7 +25,8 @@ public class GuardPatrol : MonoBehaviour
     
     //variable player visibility
     private bool playerInvisible = false;
-    [SerializeField] private GameObject player;
+    [SerializeField] private PlayerControl player;
+    
     private Collider2D playerCollider;
     
 
@@ -43,8 +44,9 @@ public class GuardPatrol : MonoBehaviour
         {
             case GuardPatrolState.Patrolling:
                 Patrol();
-                if (CheckPlayerVisibility())
+                if (CheckPlayerVisibility() && !player.IsPlayerHiding())
                 {
+
                     Debug.Log("Chasing guard: on");
                     state = GuardPatrolState.Chasing;
                     ChasePlayer();
@@ -157,10 +159,9 @@ public class GuardPatrol : MonoBehaviour
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             // Debug.Log($"[GuardPatrolState] Raycast hit: {hit.collider.name}");
-            Debug.Log("is it working!!");
+            
             if(Vector2.Angle(directionToCompare, raycastDirection) < 45)
             {
-                Debug.Log($"is it true?{hit.collider.name}");
                 return true;
             }
         }
