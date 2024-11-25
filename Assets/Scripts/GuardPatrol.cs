@@ -173,14 +173,14 @@ public class GuardPatrol : MonoBehaviour
     public void SetPlayerInvisible(bool isInvisible)
     {
         playerInvisible = isInvisible;
-        if(isInvisible)
-        {
-            playerCollider.enabled = false;
-        }
-        else
-        {
-            playerCollider.enabled = true;
-        }
+        // if(isInvisible)
+        // {
+        //     playerCollider.enabled = false;
+        // }
+        // else
+        // {
+        //     playerCollider.enabled = true;
+        // }
 
     }
     

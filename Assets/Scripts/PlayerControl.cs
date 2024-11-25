@@ -66,8 +66,8 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         MoveX();
+        // IsPlayerHiding();
         Debug.Log($"gweny : Update: isHiding = {isHiding}, isInHidingSpot = {isInHidingSpot}");
-        // PlayerIsHiding();
         // Debug.Log($"sam PlayerIsHiding : {isHiding}");
         Debug.Log($"sam isHiding : {isHiding}");
     }
@@ -87,50 +87,29 @@ public class PlayerControl : MonoBehaviour
 
     public void PlayerIsHiding(InputAction.CallbackContext context)
     {
-        // if (context.performed && isInHidingSpot)
-        // {
-        //     Debug.Log($"gweny : PlayerIsHiding called. isInHidingSpot: {isInHidingSpot}, context.performed: {context.performed}");
-
-        //     isHiding = !isHiding;
-
-        //     if(isHiding)
-        //     {
-        //         Debug.Log("Player is now hiding");
-        //         guard.GetComponent<GuardPatrol>().SetPlayerInvisible(true);
-        //         playerCollider.isTrigger = true;
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("Player is no longer hiding");
-        //         guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
-        //         playerCollider.isTrigger = false;
-        //     }
-        // } 
-        // else if (context.performed && !isInHidingSpot)
-        // {
-        //         Debug.Log("Cannot hide, player is not in a hiding spot!");
-        // }
-        if (context.performed && isInHidingSpot)
+        Debug.Log($"gweny : {useKey.name} is used");
+        //verifie si useKey a été appuyer et si je suis dans mon hiding spot
+        if (isInHidingSpot)
         {
-            Debug.Log($"Toggling hiding state: isHiding = {isHiding}");
+            Debug.Log($"gweny :Toggling hiding state: isHiding = {isHiding}");
             isHiding = !isHiding;
 
             if (isHiding)
             {
-                Debug.Log("Player is now hiding");
+                Debug.Log($"gweny :Player is now hiding : {isHiding}");
                 guard.GetComponent<GuardPatrol>().SetPlayerInvisible(true);
                 playerCollider.isTrigger = true;
             }
             else
             {
-                Debug.Log("Player is no longer hiding");
+                Debug.Log(" gweny : Player is no longer hiding");
                 guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
                 playerCollider.isTrigger = false;
             }
         }
-        else if (context.performed && !isInHidingSpot)
+        else
         {
-            Debug.Log("Cannot hide, player is not in a hiding spot!");
+            Debug.Log("gweny : Cannot hide, player is not in a hiding spot!");
         }    
     }
 
@@ -174,7 +153,7 @@ public class PlayerControl : MonoBehaviour
         }
         if(collision.transform.CompareTag("HidingSpot"))
         {
-            if (isHiding)
+            if (!isHiding)
             {
                 Debug.Log("Player is still hiding, ignoring exit trigger");
                 return; // Ne pas forcer l'état si le joueur est encore caché
@@ -188,11 +167,13 @@ public class PlayerControl : MonoBehaviour
     void OnTriggerExit2D(Collider2D other){
         if(other.CompareTag("HidingSpot"))
         {
-            isInHidingSpot = false;
+            
             isHiding = false;
+            isInHidingSpot = false;
+            
             guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
             playerCollider.isTrigger = false;
-            Debug.Log($"gweny : Triggered player as now exited the hiding spot {other.name}");
+            Debug.Log($"gweny : Triggered player as now exited the hiding spot {other.name}, isInHidingSpot = {isInHidingSpot}");
 
         }
 
