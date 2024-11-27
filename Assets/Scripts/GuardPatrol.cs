@@ -144,22 +144,14 @@ public class GuardPatrol : MonoBehaviour
         
 
         Vector3 start = transform.position + (raycastDirection * 0.8f);
-        // Vector3 startRight = transform.position + (direction * -10.8f);
         
-
         RaycastHit2D hit = Physics2D.Raycast(start, raycastDirection, 10f);
-        // RaycastHit2D hitRight = Physics2D.Raycast(startRight, direction, 10f );
 
         Debug.DrawRay(start, raycastDirection * 10, Color.red);
-        // Debug.DrawRay(startRight, direction * 10, Color.red);
-
-
-
+        
         if(hit.collider != null) Debug.Log($"+++ {hit.collider.name} +++");
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
-            // Debug.Log($"[GuardPatrolState] Raycast hit: {hit.collider.name}");
-            
             if(Vector2.Angle(directionToCompare, raycastDirection) < 45)
             {
                 return true;

@@ -14,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - LightCollider
   - 
   - 
   - 
@@ -41,9 +41,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 345957999
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: GameLayer1
     uniqueID: 1773922931
+    locked: 0
+  - name: GameLayer 2
+    uniqueID: 3830855803
     locked: 0

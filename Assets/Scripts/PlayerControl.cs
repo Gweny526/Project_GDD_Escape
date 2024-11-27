@@ -62,14 +62,14 @@ public class PlayerControl : MonoBehaviour
     }
     
 
-    // Update is called once per frame
+    
     void Update()
     {
         MoveX();
-        // IsPlayerHiding();
+        
         Debug.Log($"gweny : Update: isHiding = {isHiding}, isInHidingSpot = {isInHidingSpot}");
-        // Debug.Log($"sam PlayerIsHiding : {isHiding}");
-        Debug.Log($"sam isHiding : {isHiding}");
+
+        
     }
     void MoveX()
     {
@@ -87,16 +87,15 @@ public class PlayerControl : MonoBehaviour
 
     public void PlayerIsHiding(InputAction.CallbackContext context)
     {
-        Debug.Log($"gweny : {useKey.name} is used");
+        
         //verifie si useKey a été appuyer et si je suis dans mon hiding spot
         if (isInHidingSpot)
         {
-            Debug.Log($"gweny :Toggling hiding state: isHiding = {isHiding}");
             isHiding = !isHiding;
 
             if (isHiding)
             {
-                Debug.Log($"gweny :Player is now hiding : {isHiding}");
+                
                 guard.GetComponent<GuardPatrol>().SetPlayerInvisible(true);
                 playerCollider.isTrigger = true;
             }
@@ -136,7 +135,7 @@ public class PlayerControl : MonoBehaviour
         if(other.CompareTag("HidingSpot"))
         {
             isInHidingSpot = true;
-            Debug.Log($"gweny : Triggered player is now in hiding spot {other.name}");
+            
 
         }
 
