@@ -1,17 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine.InputSystem;
 using UnityEngine;
-using Unity.VisualScripting;
-using UnityEngine.Windows;
+
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
 {
     public InputActionAsset actions;
     public float speed = 1f;
+    //move keys
     private InputAction xAxis;
+    //hide key
     private InputAction useKey;
+    //view key
+    private InputAction viewKey;
     public Rigidbody2D rb;
 
     [SerializeField]private bool rightIsBlocked = false;
@@ -19,6 +21,7 @@ public class PlayerControl : MonoBehaviour
 
     //ref du "guard"
     public GameObject guard;
+    //ref du player
     [SerializeField] private GameObject player;
     private Collider2D playerCollider;
 
@@ -32,6 +35,10 @@ public class PlayerControl : MonoBehaviour
 
     //zone de cachette 
     private bool isInHidingSpot = false;
+
+    //virtual camera
+    private CinemachineVirtualCamera activeCamera;
+
 
 
     void Awake()
@@ -79,6 +86,14 @@ public class PlayerControl : MonoBehaviour
 
         transform.position += speed * Time.deltaTime * xMove * transform.right;
         
+    }
+    public void ViewChangeCamera(CinemachineVirtualCamera cameraToActivate)
+    {
+        float xMove = xAxis.ReadValue<float>();
+        if(xMove < 0 && Input.GetButtonDown("Look"))
+        {
+            
+        }
     }
     public bool IsPlayerHiding()
     {
