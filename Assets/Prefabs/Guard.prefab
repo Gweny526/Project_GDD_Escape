@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1773922931
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.9622642, g: 0.8732708, b: 0.004538993, a: 1}
@@ -282,7 +282,7 @@ MonoBehaviour:
   state: 0
   playerTransform: {fileID: 0}
   waypointGroup: {fileID: 0}
-  chaseSpeed: 5
+  chaseSpeed: 10
   player: {fileID: 0}
 --- !u!70 &5336281843931979398
 CapsuleCollider2D:
@@ -384,9 +384,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1773922931
-  m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingLayerID: -464111493
+  m_SortingLayer: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 0, g: 0.94925475, b: 1, a: 1}
   m_FlipX: 0
@@ -499,6 +499,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1278962375649610282, guid: d95da88540d2d6e44a0c4c40c581b24a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1278962375649610283, guid: d95da88540d2d6e44a0c4c40c581b24a, type: 3}
       propertyPath: m_LocalScale.x
       value: -1.25
@@ -569,11 +573,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9133201526527734124, guid: d95da88540d2d6e44a0c4c40c581b24a, type: 3}
       propertyPath: position.x
-      value: 117.08
+      value: 29.48
       objectReference: {fileID: 0}
     - target: {fileID: 9133201526527734124, guid: d95da88540d2d6e44a0c4c40c581b24a, type: 3}
       propertyPath: position.y
-      value: 0.86100006
+      value: 0.69100004
+      objectReference: {fileID: 0}
+    - target: {fileID: 9133201526527734124, guid: d95da88540d2d6e44a0c4c40c581b24a, type: 3}
+      propertyPath: SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9133201526527734124, guid: d95da88540d2d6e44a0c4c40c581b24a, type: 3}
       propertyPath: TransformIsDirty

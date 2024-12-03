@@ -143,7 +143,7 @@ public class GuardPatrol : MonoBehaviour
         Vector3 raycastDirection = directionToCompare.normalized;
         
 
-        Vector3 start = transform.position + (raycastDirection * 0.8f);
+        Vector3 start = transform.position + (raycastDirection * 3f);
         
         RaycastHit2D hit = Physics2D.Raycast(start, raycastDirection, 10f);
 

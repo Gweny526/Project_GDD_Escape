@@ -156,9 +156,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1773922931
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 5186635990591767473}
   - component: {fileID: 4277385689915597759}
   m_Layer: 6
-  m_Name: GameObject
+  m_Name: VueConeUpCam1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 6888750719936089567}
   - component: {fileID: 8260246034461806625}
   m_Layer: 6
-  m_Name: GameObject (1)
+  m_Name: VueConeDownCam1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -395,7 +395,7 @@ Transform:
   m_GameObject: {fileID: 8199100296180325130}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.19349112, w: 0.98110205}
-  m_LocalPosition: {x: 3.7, y: -0.02, z: -10.675388}
+  m_LocalPosition: {x: 4.2, y: -0.02, z: -10.675388}
   m_LocalScale: {x: -3.1207678, y: 1.5885327, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -418,8 +418,8 @@ MonoBehaviour:
   Range: 10
   Color: {r: 1, g: 0.10395087, b: 0, a: 1}
   Intensity: 1
-  SortingLayer: Default
-  SortingOrder: -1000
+  SortingLayer: GameLayer1
+  SortingOrder: 1
   filteringSettings:
     useLayerMask: 1
     layerMask:
@@ -430,7 +430,7 @@ MonoBehaviour:
     OptimizedRaycasting: 1
     CameraCulling: {fileID: 0}
     ChooseMainCamera: 0
-  position: {x: 59.412495, y: 4.403562}
+  position: {x: 59.569767, y: 4.468106}
   TransformIsDirty: 0
   needUpdate: 0
   ContactFilter:
@@ -493,7 +493,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -1000
+  m_SortingLayerID: 1773922931
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
