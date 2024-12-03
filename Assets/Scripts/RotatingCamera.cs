@@ -65,20 +65,15 @@ public class RotatingCamera : MonoBehaviour
 
     void CheckPlayerVisibility()
     {
-        // // Direction du Raycast (local forward de l'objet)
-        // Vector2 direction = transform.right; // Utilise le X local comme direction du Raycast
-
-        // // Lancer un Raycast
-        // RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, Mathf.Infinity, layerMask);
+       
         Vector3 directionToCompare;
         if (transform.localScale.x > 0)
         {
-            // Garde regarde à droite
             directionToCompare = transform.right;
         }
         else
         {
-            // Garde regarde à gauche
+
             directionToCompare = -transform.right;
         }
         Vector3 raycastDirection = directionToCompare.normalized;
@@ -94,12 +89,13 @@ public class RotatingCamera : MonoBehaviour
             if (hit.collider.transform == player)
             {
                 Debug.Log("Player détecté par la fausse caméra !");
+                Debug.Log(hit.collider.name);
                 ResetPlayerPosition();
-                // Ici, vous pouvez déclencher des actions (par exemple, une alarme).
+
             }
             else
             {
-                Debug.Log("Un autre objet est détecté.");
+                Debug.Log($"Un autre objet est détecté. {hit.collider.name}");
             }
         }
         else

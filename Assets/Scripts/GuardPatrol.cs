@@ -47,7 +47,7 @@ public class GuardPatrol : MonoBehaviour
                 if (CheckPlayerVisibility() && !player.IsPlayerHiding())
                 {
 
-                    Debug.Log("Chasing guard: on");
+                    Debug.Log("gweny :  Chasing guard: on");
                     state = GuardPatrolState.Chasing;
                     ChasePlayer();
                 }
