@@ -150,8 +150,6 @@ public class PlayerControl : MonoBehaviour
         if(other.CompareTag("HidingSpot"))
         {
             isInHidingSpot = true;
-            
-
         }
 
     }

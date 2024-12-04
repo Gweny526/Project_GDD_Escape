@@ -7,6 +7,7 @@ TagManager:
   - InvisibleWall
   - Guard
   - HidingSpot
+  - LevelExit
   layers:
   - Default
   - TransparentFX
