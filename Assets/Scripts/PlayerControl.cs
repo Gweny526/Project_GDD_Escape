@@ -1,6 +1,7 @@
 using Cinemachine;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using TMPro;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -38,6 +39,8 @@ public class PlayerControl : MonoBehaviour
 
     //virtual camera
     private CinemachineVirtualCamera activeCamera;
+    
+    public TMP_Text textPressE;
 
 
 
@@ -54,6 +57,11 @@ public class PlayerControl : MonoBehaviour
             initialGuardPosition = guard.transform.position;
         }
         playerCollider = player.GetComponent<Collider2D>();
+
+        if(textPressE != null)
+        {
+            textPressE.enabled = false;
+        }
     }
 
     void OnEnable()
@@ -150,6 +158,10 @@ public class PlayerControl : MonoBehaviour
         if(other.CompareTag("HidingSpot"))
         {
             isInHidingSpot = true;
+            if(textPressE != null)
+            {
+                textPressE.enabled = true;
+            }
         }
 
     }
@@ -182,6 +194,10 @@ public class PlayerControl : MonoBehaviour
             
             isHiding = false;
             isInHidingSpot = false;
+            if(textPressE != null)
+            {
+                textPressE.enabled = false;
+            }
             
             guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
             playerCollider.isTrigger = false;
