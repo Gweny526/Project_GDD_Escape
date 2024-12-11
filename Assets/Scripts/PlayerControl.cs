@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]private bool leftIsBlocked = false;
 
     //ref du "guard"
-    public GameObject guard;
+    public GuardPatrol[] guards;
     //ref du player
     [SerializeField] private GameObject player;
     private Collider2D playerCollider;
@@ -29,9 +29,8 @@ public class PlayerControl : MonoBehaviour
 
     //position initiale
     private Vector2 initialPlayerPosition;
-    private Vector2 initialGuardPosition;
 
-    //est-ce que le player est caché
+    
     private bool isHiding = false;
 
     //zone de cachette 
@@ -40,7 +39,7 @@ public class PlayerControl : MonoBehaviour
     //virtual camera
     private CinemachineVirtualCamera activeCamera;
     
-    public TMP_Text textPressE;
+    public TextManager textManager;
 
 
 
@@ -52,16 +51,26 @@ public class PlayerControl : MonoBehaviour
 
         //save initial position
         initialPlayerPosition = transform.position;
-        if(guard != null)
+        foreach(GuardPatrol guard in guards)
         {
-            initialGuardPosition = guard.transform.position;
+            if(guard != null)
+            {
+                initialPlayerPosition = player.transform.position; 
+            }
         }
         playerCollider = player.GetComponent<Collider2D>();
 
-        if(textPressE != null)
-        {
-            textPressE.enabled = false;
-        }
+        isHiding = false;
+        isInHidingSpot = false; 
+
+    //     if(textPressE != null)
+    //     {
+    //         textPressE.enabled = false;
+    //     }
+    }
+    void Start()
+    {
+        guards = FindObjectsOfType<GuardPatrol>();
     }
 
     void OnEnable()
@@ -118,14 +127,20 @@ public class PlayerControl : MonoBehaviour
 
             if (isHiding)
             {
-                
-                guard.GetComponent<GuardPatrol>().SetPlayerInvisible(true);
-                playerCollider.isTrigger = true;
+                foreach(GuardPatrol guard in guards){
+                    guard.SetPlayerInvisible(true);
+
+                }
+                    playerCollider.isTrigger = true;
             }
             else
             {
-                Debug.Log(" gweny : Player is no longer hiding");
-                guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
+                foreach(GuardPatrol guard in guards)
+                {
+                    guard.SetPlayerInvisible(false);
+                    Debug.Log(" gweny : Player is no longer hiding");
+
+                }
                 playerCollider.isTrigger = false;
             }
         }
@@ -149,8 +164,14 @@ public class PlayerControl : MonoBehaviour
         }
         if(collision.transform.CompareTag("Guard") && !isHiding){
             transform.position = initialPlayerPosition;
-            if (guard != null){
-                guard.transform.position = initialGuardPosition;
+            foreach(GuardPatrol guard in guards)
+            {
+                if (guard != null)
+                {
+                    initialPlayerPosition = player.transform.position; 
+
+                }
+
             }
         }
     }
@@ -158,10 +179,23 @@ public class PlayerControl : MonoBehaviour
         if(other.CompareTag("HidingSpot"))
         {
             isInHidingSpot = true;
-            if(textPressE != null)
+            HidingSpot hidingSpot = other.GetComponent<HidingSpot>();
+            if (hidingSpot != null && textManager != null)
             {
-                textPressE.enabled = true;
+                // Active les textes selon les spécifications du HidingSpot
+                textManager.ShowText(hidingSpot.activateFirstText, hidingSpot.activateSecondText, hidingSpot.activateThirdText);
             }
+            // if (textManager != null)
+            // {
+            //     textManager.ShowText(0, "Press E to hide!");
+            //     textManager.ShowText(1, "Press E to hide!");
+            //     textManager.ShowText(2, "Press E to hide!");
+
+            // }
+            // if(textPressE != null)
+            // {
+            //     textPressE.enabled = true;
+            // }
         }
 
     }
@@ -194,12 +228,27 @@ public class PlayerControl : MonoBehaviour
             
             isHiding = false;
             isInHidingSpot = false;
-            if(textPressE != null)
+            // if(textPressE != null)
+            // {
+            //     textPressE.enabled = false;
+            // }
+
+            if (textManager != null)
             {
-                textPressE.enabled = false;
+                textManager.ShowText(false, false, false); // Désactiver tous les textes
             }
-            
-            guard.GetComponent<GuardPatrol>().SetPlayerInvisible(false);
+            // if (textManager != null)
+            // {
+            //     textManager.HideText(0);
+            //     textManager.HideText(1);
+            //     textManager.HideText(2);
+
+            // }
+            foreach(GuardPatrol guard in guards)
+            {
+                guard.SetPlayerInvisible(false);
+
+            }
             playerCollider.isTrigger = false;
             Debug.Log($"gweny : Triggered player as now exited the hiding spot {other.name}, isInHidingSpot = {isInHidingSpot}");
 
