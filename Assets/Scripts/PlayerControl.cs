@@ -8,7 +8,7 @@ using TMPro;
 public class PlayerControl : MonoBehaviour
 {
     public InputActionAsset actions;
-    public float speed = 1f;
+    public float speed = 8f;
     //move keys
     private InputAction xAxis;
     //hide key
@@ -102,7 +102,17 @@ public class PlayerControl : MonoBehaviour
         if(xMove > 0 && rightIsBlocked) xMove = 0f;
 
         transform.position += speed * Time.deltaTime * xMove * transform.right;
+        FlipSprite(xMove);
         
+    }
+    void FlipSprite(float direction)
+    {
+        if ((direction > 0 && transform.localScale.x < 0) || (direction < 0 && transform.localScale.x > 0))
+        {
+            Vector3 localScale = transform.localScale;
+            localScale.x = -localScale.x; // Flip the sprite horizontally
+            transform.localScale = localScale;
+        }
     }
     public void ViewChangeCamera(CinemachineVirtualCamera cameraToActivate)
     {
