@@ -31,7 +31,7 @@ public class PlayerControl : MonoBehaviour
     private Vector2 initialPlayerPosition;
 
     
-    private bool isHiding = false;
+    public bool isHiding = false;
 
     //zone de cachette 
     private bool isInHidingSpot = false;
@@ -122,10 +122,6 @@ public class PlayerControl : MonoBehaviour
             
         }
     }
-    public bool IsPlayerHiding()
-    {
-        return isHiding;
-    }
 
     public void PlayerIsHiding(InputAction.CallbackContext context)
     {
@@ -137,20 +133,12 @@ public class PlayerControl : MonoBehaviour
 
             if (isHiding)
             {
-                foreach(GuardPatrol guard in guards){
-                    guard.SetPlayerInvisible(true);
 
-                }
-                    playerCollider.isTrigger = true;
+                playerCollider.isTrigger = true;
             }
             else
             {
-                foreach(GuardPatrol guard in guards)
-                {
-                    guard.SetPlayerInvisible(false);
-                    Debug.Log(" gweny : Player is no longer hiding");
 
-                }
                 playerCollider.isTrigger = false;
             }
         }
@@ -254,11 +242,7 @@ public class PlayerControl : MonoBehaviour
             //     textManager.HideText(2);
 
             // }
-            foreach(GuardPatrol guard in guards)
-            {
-                guard.SetPlayerInvisible(false);
 
-            }
             playerCollider.isTrigger = false;
             Debug.Log($"gweny : Triggered player as now exited the hiding spot {other.name}, isInHidingSpot = {isInHidingSpot}");
 

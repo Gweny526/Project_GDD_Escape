@@ -25,13 +25,16 @@ public class GuardPatrol : MonoBehaviour
     private Vector2 previousPosition;
 
     //joueur visibilité
-    private bool playerInvisible = false;
-    [SerializeField] private PlayerControl player;
+    private bool playerInvisible{
+        get{return player.isHiding;}
+    }
+    private PlayerControl player;
 
     private Collider2D playerCollider;
 
     void Awake()
     {
+        player = FindObjectOfType<PlayerControl>();
         // Récupère tous les waypoints dans un tableau
         int count = waypointGroup.childCount;
         waypoints = new Transform[count];
@@ -52,7 +55,7 @@ public class GuardPatrol : MonoBehaviour
         {
             case GuardPatrolState.Patrolling:
                 Patrol();
-                if (CheckPlayerVisibility() && !player.IsPlayerHiding())
+                if (CheckPlayerVisibility())
                 {
                     Debug.Log("gweny : Chasing guard: on");
                     state = GuardPatrolState.Chasing;
@@ -73,7 +76,6 @@ public class GuardPatrol : MonoBehaviour
         }
     }
 
-    // Gère le patrouillage du garde
     void Patrol()
     {
         MoveToWaypoint();
@@ -122,8 +124,10 @@ public class GuardPatrol : MonoBehaviour
     // Vérifie si le joueur est visible par le garde
     bool CheckPlayerVisibility()
     {
+
         // Si le joueur est invisible, ne le détecte pas
         if (playerInvisible) return false;
+
 
         // Calcul de la direction dans laquelle le garde regarde
         Vector3 directionToCompare;
@@ -157,11 +161,6 @@ public class GuardPatrol : MonoBehaviour
     }
 
     // Permet de définir si le joueur est invisible ou non
-    public void SetPlayerInvisible(bool isInvisible)
-    {
-        playerInvisible = isInvisible;
-        // Debug.Log($"gweny : Player invisibility set to {isInvisible}");
-    }
 
     // Gère l'orientation du sprite
     void FlipSprite(float direction)
