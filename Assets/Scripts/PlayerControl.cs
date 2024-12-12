@@ -5,6 +5,7 @@ using TMPro;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class PlayerControl : MonoBehaviour
 {
     public InputActionAsset actions;
@@ -40,6 +41,7 @@ public class PlayerControl : MonoBehaviour
     private CinemachineVirtualCamera activeCamera;
     
     public TextManager textManager;
+    private Animator animator;
 
 
 
@@ -48,6 +50,7 @@ public class PlayerControl : MonoBehaviour
         xAxis = actions.FindActionMap("PlayerMove").FindAction("XAxis");
         useKey = actions.FindActionMap("PlayerMove").FindAction("Hide");
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         //save initial position
         initialPlayerPosition = transform.position;
@@ -59,6 +62,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
         playerCollider = player.GetComponent<Collider2D>();
+        
 
         isHiding = false;
         isInHidingSpot = false; 
@@ -102,6 +106,7 @@ public class PlayerControl : MonoBehaviour
         if(xMove > 0 && rightIsBlocked) xMove = 0f;
 
         transform.position += speed * Time.deltaTime * xMove * transform.right;
+        animator.SetBool("isMoving", xMove != 0f);
         FlipSprite(xMove);
         
     }
