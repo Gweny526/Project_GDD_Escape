@@ -25,6 +25,7 @@ public class PlayerControl : MonoBehaviour
     public GuardPatrol[] guards;
     //ref du player
     [SerializeField] private GameObject player;
+    
     private Collider2D playerCollider;
 
 
@@ -51,6 +52,7 @@ public class PlayerControl : MonoBehaviour
         useKey = actions.FindActionMap("PlayerMove").FindAction("Hide");
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        
 
         //save initial position
         initialPlayerPosition = transform.position;
@@ -140,11 +142,17 @@ public class PlayerControl : MonoBehaviour
             {
 
                 playerCollider.isTrigger = true;
+                player.GetComponent<SpriteRenderer>().enabled = false;
+                
+                
+                                  
             }
             else
             {
 
                 playerCollider.isTrigger = false;
+                player.GetComponent<SpriteRenderer> ().enabled = true;
+
             }
         }
         else
@@ -186,19 +194,9 @@ public class PlayerControl : MonoBehaviour
             if (hidingSpot != null && textManager != null)
             {
                 // Active les textes selon les spécifications du HidingSpot
-                textManager.ShowText(hidingSpot.activateFirstText, hidingSpot.activateSecondText, hidingSpot.activateThirdText);
+                textManager.ShowText(hidingSpot.activateFirstText, hidingSpot.activateSecondText, hidingSpot.activateThirdText, hidingSpot.activateFourthText);
             }
-            // if (textManager != null)
-            // {
-            //     textManager.ShowText(0, "Press E to hide!");
-            //     textManager.ShowText(1, "Press E to hide!");
-            //     textManager.ShowText(2, "Press E to hide!");
-
-            // }
-            // if(textPressE != null)
-            // {
-            //     textPressE.enabled = true;
-            // }
+            
         }
 
     }
@@ -231,22 +229,14 @@ public class PlayerControl : MonoBehaviour
             
             isHiding = false;
             isInHidingSpot = false;
-            // if(textPressE != null)
-            // {
-            //     textPressE.enabled = false;
-            // }
+            
+            player.GetComponent<SpriteRenderer> ().enabled = true;
 
             if (textManager != null)
             {
-                textManager.ShowText(false, false, false); // Désactiver tous les textes
+                textManager.ShowText(false, false, false, false); // Désactiver tous les textes
             }
-            // if (textManager != null)
-            // {
-            //     textManager.HideText(0);
-            //     textManager.HideText(1);
-            //     textManager.HideText(2);
-
-            // }
+            
 
             playerCollider.isTrigger = false;
             Debug.Log($"gweny : Triggered player as now exited the hiding spot {other.name}, isInHidingSpot = {isInHidingSpot}");

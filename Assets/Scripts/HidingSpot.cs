@@ -7,5 +7,6 @@ public class HidingSpot : MonoBehaviour
     public bool activateFirstText = false;
     public bool activateSecondText = false;
     public bool activateThirdText = false;
+    public bool activateFourthText = false;
 }
 
