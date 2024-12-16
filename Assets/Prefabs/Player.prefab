@@ -139,9 +139,9 @@ GameObject:
   - component: {fileID: 1977332412535128990}
   - component: {fileID: 7515066862885127879}
   - component: {fileID: 6149015042507837597}
-  - component: {fileID: 1209433192981498932}
   - component: {fileID: 4545017309726173230}
   - component: {fileID: 4838252717868880999}
+  - component: {fileID: 499388344245504985}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -245,8 +245,53 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 6
---- !u!61 &1209433192981498932
-BoxCollider2D:
+--- !u!114 &4545017309726173230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543372295104057970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d697f625b7b51a47b5f8ed8312919bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: {fileID: -944628639613478452, guid: 9f50294519fb44447be83e7f9cd7e623, type: 3}
+  speed: 8
+  rb: {fileID: 6149015042507837597}
+  rightIsBlocked: 0
+  leftIsBlocked: 0
+  guards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  player: {fileID: 5543372295104057970}
+  isHiding: 0
+  textManager: {fileID: 0}
+--- !u!95 &4838252717868880999
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543372295104057970}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1568d34e526713a4abd1ef52f089fcf0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!60 &499388344245504985
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -287,52 +332,40 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.27, y: 0.72}
-  m_EdgeRadius: 0
---- !u!114 &4545017309726173230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5543372295104057970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d697f625b7b51a47b5f8ed8312919bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actions: {fileID: -944628639613478452, guid: 9f50294519fb44447be83e7f9cd7e623, type: 3}
-  speed: 8
-  rb: {fileID: 6149015042507837597}
-  rightIsBlocked: 0
-  leftIsBlocked: 0
-  guards:
-  - {fileID: 0}
-  - {fileID: 0}
-  player: {fileID: 5543372295104057970}
-  textManager: {fileID: 0}
---- !u!95 &4838252717868880999
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5543372295104057970}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1568d34e526713a4abd1ef52f089fcf0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.049735077, y: 0.33018655}
+      - {x: 0.009624893, y: 0.33507854}
+      - {x: -0.02622209, y: 0.3139342}
+      - {x: -0.035803366, y: 0.30212638}
+      - {x: -0.07033457, y: 0.30202043}
+      - {x: -0.07149928, y: 0.26150715}
+      - {x: -0.07203334, y: 0.24645217}
+      - {x: -0.04042639, y: 0.24606793}
+      - {x: -0.005880356, y: 0.20655188}
+      - {x: -0.0028984859, y: 0.17693035}
+      - {x: -0.025544982, y: 0.16467127}
+      - {x: -0.036706764, y: -0.2455476}
+      - {x: -0.018632207, y: -0.2526749}
+      - {x: -0.01941657, y: -0.34548366}
+      - {x: 0.083677, y: -0.34458032}
+      - {x: 0.019468721, y: -0.29337946}
+      - {x: 0.018703192, y: -0.25545695}
+      - {x: 0.073080204, y: -0.25610203}
+      - {x: 0.061571263, y: 0.041695863}
+      - {x: 0.0734768, y: 0.03893814}
+      - {x: 0.075708665, y: 0.08538331}
+      - {x: 0.023733689, y: 0.15616593}
+      - {x: 0.030067174, y: 0.18023282}
+      - {x: 0.03792886, y: 0.18084295}
+      - {x: 0.040917672, y: 0.16016728}
+      - {x: 0.05227471, y: 0.16258533}
+      - {x: 0.046358522, y: 0.19201545}
+      - {x: 0.067246035, y: 0.18994638}
+      - {x: 0.06660844, y: 0.21069}
+      - {x: 0.07832051, y: 0.21171795}
+      - {x: 0.077354275, y: 0.31206238}
+  m_UseDelaunayMesh: 0
 --- !u!1 &8218077390296055937
 GameObject:
   m_ObjectHideFlags: 0

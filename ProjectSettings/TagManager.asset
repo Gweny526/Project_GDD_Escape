@@ -54,3 +54,6 @@ TagManager:
   - name: GameLayer 2
     uniqueID: 3830855803
     locked: 0
+  - name: GameLayer4
+    uniqueID: 3196782179
+    locked: 0
