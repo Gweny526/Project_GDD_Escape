@@ -43,6 +43,11 @@ public class PlayerControl : MonoBehaviour
     
     public TextManager textManager;
     private Animator animator;
+    private HidingSpot.HidingSpotType currentHidingSpotType;
+
+    private bool isCrawling = false;
+    private bool isCrawlingMoving = false;  
+
 
 
 
@@ -140,18 +145,35 @@ public class PlayerControl : MonoBehaviour
 
             if (isHiding)
             {
+                if(currentHidingSpotType == HidingSpot.HidingSpotType.Bed)
+                {
+                    playerCollider.isTrigger = true;
+                    // Active l'animation de rampage
+                    animator.SetBool("IsHidingUnderBed", true);
+                    isCrawling = true;
+                    isCrawlingMoving = false;
 
-                playerCollider.isTrigger = true;
-                player.GetComponent<SpriteRenderer>().enabled = false;
-                
-                
-                                  
+                }
+                else if(currentHidingSpotType == HidingSpot.HidingSpotType.Door)
+                {
+                    playerCollider.isTrigger = true;
+
+                    player.GetComponent<SpriteRenderer>().enabled = false;      
+                    // Aucune animation spécifique
+                    animator.SetBool("IsHidingUnderBed", false);
+                    isCrawling = false;
+                    isCrawlingMoving = false;               
+                }
             }
             else
             {
 
                 playerCollider.isTrigger = false;
                 player.GetComponent<SpriteRenderer> ().enabled = true;
+                animator.SetBool("IsHidingUnderBed", false);
+                isCrawling = false;
+                isCrawlingMoving = false;                
+                
 
             }
         }
@@ -191,11 +213,17 @@ public class PlayerControl : MonoBehaviour
         {
             isInHidingSpot = true;
             HidingSpot hidingSpot = other.GetComponent<HidingSpot>();
-            if (hidingSpot != null && textManager != null)
+            if(hidingSpot != null)
             {
-                // Active les textes selon les spécifications du HidingSpot
-                textManager.ShowText(hidingSpot.activateFirstText, hidingSpot.activateSecondText, hidingSpot.activateThirdText, hidingSpot.activateFourthText);
+                currentHidingSpotType= hidingSpot.hidingType;
+                HidingSpotText hidingSpotText = other.GetComponent<HidingSpotText>();
+                if (textManager != null)
+                {
+                    // Active les textes selon les spécifications du HidingSpot
+                    textManager.ShowText(hidingSpotText.activateFirstText, hidingSpotText.activateSecondText, hidingSpotText.activateThirdText, hidingSpotText.activateFourthText);
+                }
             }
+
             
         }
 
@@ -229,7 +257,13 @@ public class PlayerControl : MonoBehaviour
             
             isHiding = false;
             isInHidingSpot = false;
-            
+            currentHidingSpotType = default; // Réinitialise le type de cachette
+
+            //Désactive l'animation 
+            animator.SetBool("IsHidingUnderBed", false);               
+            isCrawling = false;
+            isCrawlingMoving = false;
+
             player.GetComponent<SpriteRenderer> ().enabled = true;
 
             if (textManager != null)

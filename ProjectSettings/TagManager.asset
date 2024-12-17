@@ -8,6 +8,8 @@ TagManager:
   - Guard
   - HidingSpot
   - LevelExit
+  - HidinSpotDoor
+  - HidingSpotBed
   layers:
   - Default
   - TransparentFX
