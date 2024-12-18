@@ -82,7 +82,7 @@ public class RotatingCamera : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(start, raycastDirection, 8f);
 
-        Debug.DrawRay(start, raycastDirection * 8, Color.red);
+        Debug.DrawRay(start, raycastDirection * 8, Color.green);
 
         if (hit.collider != null)
         {
